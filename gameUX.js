@@ -1,45 +1,47 @@
-$(document).keydown(function (e){
-    handle(e);
+$(document).keydown(function(e) { //监听按键
+    handle(e); //事件调用函数
 });
-var handle=function (e){
-    switch (e.keyCode){
-        case 37://left
-            if(moveLeft()){
-                setTimeout(generateOneNumber,200);
-                setTimeout(isgameOver,400);
+var handle = function(e) {
+    switch (e.keyCode) {
+        case 37: //left
+            if (moveLeft()) {
+                setTimeout(generateOneNumber, 200);
+                setTimeout(isgameOver, 400);
             }
             break;
-        case 38://up
-            if(moveUp()){
-                setTimeout(generateOneNumber,200);
-                setTimeout(isgameOver,400);
+        case 38: //up
+            if (moveUp()) {
+                setTimeout(generateOneNumber, 200);
+                setTimeout(isgameOver, 400);
             }
             break;
-        case 39://right
-            if(moveRight()){
-                setTimeout(generateOneNumber,200);
-                setTimeout(isgameOver,400);
+        case 39: //right
+            if (moveRight()) {
+                setTimeout(generateOneNumber, 200);
+                setTimeout(isgameOver, 400);
             }
             break;
-        case 40://down
-            if(moveDown()){
-                setTimeout(generateOneNumber,200);
-                setTimeout(isgameOver,400);
+        case 40: //down
+            if (moveDown()) {
+                setTimeout(generateOneNumber, 200);
+                setTimeout(isgameOver, 400);
             }
             break;
-        default :
+        default:
             break;
     }
 
 }
+
 function moveLeft() {
-    if (!canMoveLeft(board)) {
+    if (!canMoveLeft(board)) { //判断能否左移
         return false;
     }
     //moveLeft
     for (var i = 0; i < 4; i++) {
         for (var j = 1; j < 4; j++) {
             if (board[i][j] != 0) {
+
                 for (var k = 0; k < j; k++) {
                     if (board[i][k] == 0 && noBlockHorizontal(i, k, j, board)) {
                         //move
@@ -48,6 +50,7 @@ function moveLeft() {
                         board[i][j] = 0;
 
                         continue;
+                        //用来判断是否合并
                     } else if (board[i][k] == board[i][j] && noBlockHorizontal(i, k, j, board) && !hasConflict[i][k]) {
                         //move
                         showMoveAnimate(i, j, i, k);
@@ -59,7 +62,7 @@ function moveLeft() {
                         score += board[i][k];
                         updateScore(score);
 
-                        hasConflict[i][k] = true;//如果发生了一次移动就设置为true；则不会连续合并。
+                        hasConflict[i][k] = true; //如果发生了一次移动就设置为true；则不会连续合并。
                         continue;
                     }
                 }
@@ -67,7 +70,7 @@ function moveLeft() {
         }
     }
 
-    setTimeout("updateBoardView()", 200);//
+    setTimeout("updateBoardView()", 200); //
     return true;
 }
 
@@ -190,31 +193,36 @@ function moveDown() {
 
 
 
-function isgameOver(){
-    if(nospace(board)&&nomove(board)){
+function isgameOver() {
+    if (nospace(board) && nomove(board)) {
         $(document).off("keydown");
         gameover();
-        $(document).keydown(function (e){
+        $(document).keydown(function(e) {
             handle(e);
         });
     }
 }
-function gameover(){
-    $("#grid-container").append("<div id='gameover' class='gameover'><p>本次得分</p><span>"+score+"</span><a href='javascript:restartGame();' id='restartgamebutton'>重新开始</a></div>");
+
+function gameover() {
+    $("#grid-container").append("<div id='gameover' class='gameover'><p>本次得分</p><span>" + score + "</span><a href='javascript:restartGame();' id='restartgamebutton'>重新开始</a></div>");
     var gameover = $("#gameover");
     gameover.css("width", "460px");
     gameover.css("height", "460px");
     gameover.css("background-color", "rgba(255,255,255,.7)");
 }
-function restartGame(){
-    var uDate =new UserDate(userName,score,nowTime(),nowDate());
-    userdates.push(uDate);
 
-    ranking(userdates);
+
+
+function restartGame() {
+
+    if (localStorage.getItem("userGameScore")) {
+        var userDatas = JSON.parse(localStorage.getItem("userGameScore")); //获取本地
+    } else {
+        var userDatas = [];
+    }
+    userDatas.push(new UserData(userName, score, nowTime(), nowDate()));
+    // console.log('userDatas', userDatas);
+    rankingSort(userDatas);
     showUserDate();
     newGame();
 }
-
-
-
-

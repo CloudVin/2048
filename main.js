@@ -8,7 +8,7 @@ function newGame() {
     init();
 
     $("#gameover").remove();
-    //生成随机数字
+    //生成两个随机数字
     generateOneNumber();
     generateOneNumber();
     score = 0; //初始化化将分数设置为0
@@ -16,9 +16,10 @@ function newGame() {
     $("#score").text(score); //将分数重置为0
 }
 //设置全局变量
-var board = []; //用来存放每个格子的值
+var board = []; //棋盘格，用来存放数字，数字格则是将其映射显示出来
 var hasConflict = []; //
 var score = 0;
+var userName;
 
 $("#newGameButton").click(newGame()); //给newgame添加点击事件
 
@@ -30,7 +31,7 @@ function newUser() { //用户名
         $("#newUser").text("无名大侠,挑战你的极限吧！");
     }
     // localStorage.setItem(("userName",userName));
-
+    return
 }
 
 function init() {
@@ -39,7 +40,7 @@ function init() {
         board[i] = [];
         hasConflict[i] = [];
         for (let j = 0; j < 4; j++) {
-            // 初始化小格子值为零
+            // 初始化棋盘格子值为零
             board[i][j] = 0;
             // 初始化为false
             hasConflict[i][j] = false;
@@ -57,18 +58,18 @@ function init() {
 
 }
 
-function updateBoardView() { //更新数字样式
+function updateBoardView() { //通过这个函数将棋盘格子的值在数字格子上显示出来，用户的每一次操作都会伴随棋盘格子的更新，相应地需要调用这个函数来更新数字格子的显示
     $(".number-cell").remove(); //先清除棋盘上的其他数字格子
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             //通过双重遍历给每一个数字格子id标号
             $("#grid-container").append("<div class='number-cell' id='number-cell-" + i + "-" + j + "'></div>");
-            let numberCell = $("#number-cell-" + i + "-" + j + "");
-            if (board[i][j] == 0) { //如果棋盘格的值为0的话,设置数字格为高宽都为0
+            let numberCell = $("#number-cell-" + i + "-" + j + ""); //遍历每一个数字格
+            if (board[i][j] == 0) { //如果棋盘格的值为0的话,设置数字格为高宽都为0，不显示出来
                 numberCell.css("width", 0);
                 numberCell.css("height", 0);
-                numberCell.css("top", getPosTop(i, j));
-                numberCell.css("left", getPosLeft(i, j));
+                numberCell.css("top", getPosTop(i, j) + 50);
+                numberCell.css("left", getPosLeft(i, j) + 50);
             } else { //如果棋盘格的值不为0的话,设置数字格为高宽为75并设置背景色和前景色及数字值，
                 numberCell.css("width", 100);
                 numberCell.css("height", 100);
@@ -76,7 +77,7 @@ function updateBoardView() { //更新数字样式
                 numberCell.css("left", getPosLeft(i, j));
                 numberCell.css("background-color", getNumberBackgroundColor(board[i][j]));
                 numberCell.css("color", getNumberColor(board[i][j]));
-                numberCell.text(board[i][j]);
+                numberCell.text(board[i][j]); //把棋盘格的数字赋值给数字显示
             }
             hasConflict[i][j] = false; //在每次碰撞完成后再次设置为false
         }
@@ -110,10 +111,10 @@ function generateOneNumber() {
     var randNumber = Math.random() < 0.5 ? 2 : 4;
 
     // 3.在随机位置显示随机数字
-    board[randX][randY] = randNumber; //将随机数字赋值给随机数字格子
+    board[randX][randY] = randNumber; //将随机数字赋值棋盘格子
     showNumberWithAnimate(randX, randY, randNumber);
 }
-
+// 更新分数
 function updateScore(score) {
     return $("#score").text(score);
 }
