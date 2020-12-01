@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2048</title>
+    <link rel="stylesheet" href="2048.css" type="text/css">
+    <script type="text/javascript" src="./jQuery/jQuery.js"></script>
+    <script type="text/javascript" src="support.js"></script>
+    <script type="text/javascript" src="animate.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="gameUX.js"></script>
+
+
+<!--    * 2048.css：游戏样式-->
+<!--    * jquery.js：jQuery文件-->
+<!--    * support.js：游戏基础逻辑文件-->
+<!--    * animation.js：游戏动画逻辑文件-->
+<!--    * main.js：游戏主逻辑文件-->
+<!--    * gameUX.js：游戏交互逻辑文件-->
+
+
+</head>
+<body>
+    <header>
+        <h1>2048</h1>
+        <div id="navList">
+            <a href="javascript:newGame();" id="newGameButton">new game</a>
+            <p class="scoreWrap">score <span id="score">0</span></p>
+            <a href="javascript:newUser();" id="newUser">输入用户名</a>
+        </div>
+
+    </header>
+    <div id="rankingList">
+        <div id="infoNav"><p>排行榜</p></div>
+        <div id="infoCon">
+            <ul id="ranking">
+
+
+            </ul>
+        </div>
+    </div>
+    <div id="grid-container">
+        <div class="grid-cell" id="grid-cell-0-0"></div>
+        <div class="grid-cell" id="grid-cell-0-1"></div>
+        <div class="grid-cell" id="grid-cell-0-2"></div>
+        <div class="grid-cell" id="grid-cell-0-3"></div>
+        <div class="grid-cell" id="grid-cell-1-0"></div>
+        <div class="grid-cell" id="grid-cell-1-1"></div>
+        <div class="grid-cell" id="grid-cell-1-2"></div>
+        <div class="grid-cell" id="grid-cell-1-3"></div>
+        <div class="grid-cell" id="grid-cell-2-0"></div>
+        <div class="grid-cell" id="grid-cell-2-1"></div>
+        <div class="grid-cell" id="grid-cell-2-2"></div>
+        <div class="grid-cell" id="grid-cell-2-3"></div>
+        <div class="grid-cell" id="grid-cell-3-0"></div>
+        <div class="grid-cell" id="grid-cell-3-1"></div>
+        <div class="grid-cell" id="grid-cell-3-2"></div>
+        <div class="grid-cell" id="grid-cell-3-3"></div>
+    </div>
+</body>
+</html>
